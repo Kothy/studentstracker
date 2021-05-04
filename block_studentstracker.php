@@ -1,4 +1,4 @@
-<?php
+0<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -88,7 +88,7 @@ class block_studentstracker extends block_base {
             $colornever = !empty($this->config->color_never) ? $this->config->color_never : get_config(
                 'studentstracker', 'colordaysnever');
 
-            // pridala som
+
             $colornormal = !empty($this->config->color_normal) ? $this->config->color_normal : get_config(
                     'studentstracker', 'colordaysnormal');
 
