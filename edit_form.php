@@ -48,6 +48,8 @@ class block_studentstracker_edit_form extends block_edit_form {
         $mform->setType('config_color_normal', PARAM_RAW);
 
         if (has_capability('block/studentstracker:editadvance', context_course::instance($COURSE->id)) or is_siteadmin($USER->id)) {
+            $mform->addElement('button', 'intro', get_string('add_group_btn', 'block_studentstracker'));
+
             $mform->addElement('text', 'config_days', get_string('days', 'block_studentstracker'));
             $mform->setDefault('config_days', get_config('studentstracker', 'trackingdays'));
             $mform->setType('config_days', PARAM_INT);

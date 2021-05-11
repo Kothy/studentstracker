@@ -20,7 +20,7 @@
  * @copyright  2015 Pierre Duverneix
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
+
 $string['studentstracker:addinstance'] = 'Add a new block Students tracker';
 $string['pluginname'] = 'Students tracker';
 $string['blocktitle'] = 'Block title';
@@ -57,3 +57,20 @@ $string['color_never_desc'] = '';
 $string['color_normal_desc'] = '';
 $string['studentstracker:view'] = 'View Students tracker results';
 $string['studentstracker:editadvance'] = 'Advanced editing within block';
+$string['add_group_btn'] = 'Add group to track';
+$string['group1:desc'] = 'Group1 description';
+$string['group2:desc'] = 'Group2 description';
+$string['group3:desc'] = 'Group3 description';
+$string['group4:desc'] = 'Group4 description';
+$string['group5:desc'] = 'Group5 description';
+$string['group1:color'] = 'Group1 color';
+$string['group2:color'] = 'Group2 color';
+$string['group3:color'] = 'Group3 color';
+$string['group4:color'] = 'Group4 color';
+$string['group5:color'] = 'Group5 color';
+$string['group1:days'] = 'Group1 days to track';
+$string['group2:days'] = 'Group2 days to track';
+$string['group3:days'] = 'Group3 days to track';
+$string['group4:days'] = 'Group4 days to track';
+$string['group5:days'] = 'Group5 days to track';
+$string['track_active_students'] = 'Track active students';
