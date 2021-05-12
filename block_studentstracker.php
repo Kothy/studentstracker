@@ -178,7 +178,7 @@ class block_studentstracker extends block_base {
             $level5_users = 0;
             $levelnever_users = 0;
 
-            $groupify = False;
+            $groupify = True;
 
             //level 1 users
             foreach ($enrols as $enrol) {
