@@ -59,7 +59,7 @@ class block_studentstracker extends block_base {
       if (is_array($output))
           $output = implode(',', $output);
 
-      echo "<script>console.log('" . $output . "');</script>";
+      echo "<script>console.log('".$output."');</script>";
     }
 
     public function count_days_from_access($lastaccess) {
@@ -176,10 +176,9 @@ class block_studentstracker extends block_base {
             $level3_users = 0;
             $level4_users = 0;
             $level5_users = 0;
-
             $levelnever_users = 0;
 
-            $groupify = True;
+            $groupify = False;
 
             //level 1 users
             foreach ($enrols as $enrol) {
