@@ -1,6 +1,11 @@
 .block_studentstracker .studentstracker_header {
     margin: 10px 0px 20px 0px;
 }
+
+.block_studentstracker .studentstracker_group {
+    margin: 10px 0px 20px 0px;
+}
+
 .block_studentstracker .studentstracker_footer {
     margin-top: 10px;
 }
@@ -35,6 +40,26 @@
 }
 
 .block_studentstracker .studentstracker-normal {
+    background: #5efa46;
+}
+
+.block_studentstracker .studentstracker-l1 {
+    background: #5efa46;
+}
+
+.block_studentstracker .studentstracker-l2 {
+    background: #5efa46;
+}
+
+.block_studentstracker .studentstracker-l3 {
+    background: #5efa46;
+}
+
+.block_studentstracker .studentstracker-l4 {
+    background: #5efa46;
+}
+
+.block_studentstracker .studentstracker-l5 {
     background: #5efa46;
 }
 

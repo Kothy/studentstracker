@@ -54,6 +54,23 @@ class block_studentstracker extends block_base {
         }
     }
 
+    public function debug_to_console($data) {
+      $output = $data;
+      if (is_array($output))
+          $output = implode(',', $output);
+
+      echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+    }
+
+    public function count_days_from_access($lastaccess) {
+      if ($lastaccess == 0) {
+        return -1;
+      } else {
+        $dateNow = intval(time());
+        return ($dateNow - $lastaccess)/ 86400;
+      }
+    }
+
     public function get_content() {
         global $CFG, $COURSE, $USER, $PAGE;
 
@@ -88,7 +105,7 @@ class block_studentstracker extends block_base {
             $colornever = !empty($this->config->color_never) ? $this->config->color_never : get_config(
                 'studentstracker', 'colordaysnever');
 
-
+            // pridala som
             $colornormal = !empty($this->config->color_normal) ? $this->config->color_normal : get_config(
                     'studentstracker', 'colordaysnormal');
 
@@ -100,7 +117,8 @@ class block_studentstracker extends block_base {
             if (!empty($this->config->text_header)) {
                 $this->text_header = $this->config->text_header;
             } else {
-                $this->text_header = get_string('text_header', 'block_studentstracker');
+                //$this->text_header = get_string('text_header', 'block_studentstracker');
+                $this->text_header = "All users";
             }
 
             if (!empty($this->config->text_header_fine)) {
@@ -144,67 +162,236 @@ class block_studentstracker extends block_base {
                 $enrol->lastaccesscourse = $this->get_last_access($context->instanceid, $enrol->id);
             }
 
+            $level1_days = 0;
+            $level2_days = 1;
+            $level3_days = 2;
+            $level4_days = 3;
+            $level5_days = 4;
+
+            $level1_users = 0;
+            $level2_users = 0;
+            $level3_users = 0;
+            $level4_users = 0;
+            $level5_users = 0;
+
+            $levelnever_users = 0;
+
+            $groupify = True;
+
+            //level 1 users
             foreach ($enrols as $enrol) {
                 if ($enrol->hasrole == true) {
-                    if ($enrol->lastaccesscourse < 1) {
-                        $output = "<li class='studentstracker-never' style='background:".$colornever."'>";
-                        $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".$this->profile($enrol, $context).
-                            " - $this->text_never_content</span></li>";
-                        array_push($this->content->items, $output);
-                        $usercount++;
-                        unset($output);
-                    }
-                }
-            }
-            foreach ($enrols as $enrol) {
-                if ($enrol->hasrole == true) {
-                    if (intval($enrol->lastaccesscourse) > 1 && intval($enrol->lastaccesscourse) < strtotime($days, time())
-                        && (intval($enrol->lastaccesscourse) < strtotime($dayscritical, time())) ) {
-                        $lastaccess = date('d/m/Y H:i', $enrol->lastaccesscourse);
-                        $output = "<li class='studentstracker-critical' style='background:".
-                            $colordayscritical."'>";
-                        $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".$this->profile($enrol, $context).
-                            " - $lastaccess</span></li>";
-                            array_push($this->content->items, $output);
-                            $usercount++;
-                            unset($output);
-                    }
-                }
-            }
-            foreach ($enrols as $enrol) {
-                if ($enrol->hasrole == true) {
-                    if ( (intval($enrol->lastaccesscourse) < strtotime($days, time()))
-                         && (intval($enrol->lastaccesscourse) >= strtotime($dayscritical, time())) ) {
-                        $lastaccess = date('d/m/Y H:i', $enrol->lastaccesscourse);
-                        $output = "<li class='studentstracker-first' style='background:".
-                            $colordays."'>";
-                        $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".
-                            $this->profile($enrol, $context)." - $lastaccess</span></li>";
-                        array_push($this->content->items, $output);
-                        $usercount++;
-                        unset($output);
-                    }
+                  $accessdays = intval($enrol->lastaccesscourse);
+                  $result = $this->count_days_from_access($accessdays);
+                  if ($result >= $level1_days && $result < $level2_days){
+                    $usercount++;
+                    $level1_users++;
+                    $this->debug_to_console("Nasiel som level 1");
+                  }
                 }
             }
 
+            //level 2 users
             foreach ($enrols as $enrol) {
                 if ($enrol->hasrole == true) {
-                    if (!($enrol->lastaccesscourse < 1)) {
-                      $output = "<li class='studentstracker-normal' style='background:".$colornormal."'>";
-                      $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".$this->profile($enrol, $context).
-                          " - $this->text_normal_content</span></li>";
-                      array_push($this->content->items, $output);
-                      $activeusercount++;
-                      unset($output);
-                    }
+                  $accessdays = intval($enrol->lastaccesscourse);
+                  $result = $this->count_days_from_access($accessdays);
+                  if ($result >= $level2_days && $result < $level3_days){
+                    $usercount++;
+                    $level2_users++;
+                    $this->debug_to_console("Nasiel som level 2");
+                  }
+                }
+            }
+
+            //level 3 users
+            foreach ($enrols as $enrol) {
+                if ($enrol->hasrole == true) {
+                  $accessdays = intval($enrol->lastaccesscourse);
+                  $result = $this->count_days_from_access($accessdays);
+                  if ($result >= $level3_days && $result < $level4_days){
+                    $usercount++;
+                    $level3_users++;
+                    $this->debug_to_console("Nasiel som level 3");
+                  }
+                }
+            }
+
+            //level 4 users
+            foreach ($enrols as $enrol) {
+                if ($enrol->hasrole == true) {
+                  $accessdays = intval($enrol->lastaccesscourse);
+                  $result = $this->count_days_from_access($accessdays);
+                  if ($result >= $level4_days && $result < $level5_days){
+                    $usercount++;
+                    $level4_users++;
+                    $this->debug_to_console("Nasiel som level 4");
+                  }
+                }
+            }
+
+            //level 5 users
+            foreach ($enrols as $enrol) {
+                if ($enrol->hasrole == true) {
+                  $accessdays = intval($enrol->lastaccesscourse);
+                  $result = $this->count_days_from_access($accessdays);
+                  if ($result >= $level5_days){
+                    $usercount++;
+                    $level5_users++;
+                    $this->debug_to_console("Nasiel som level 5");
+                  }
+                }
+            }
+
+            //level never
+            foreach ($enrols as $enrol) {
+                if ($enrol->hasrole == true) {
+                  $accessdays = intval($enrol->lastaccesscourse);
+                  $result = $this->count_days_from_access($accessdays);
+                  if ($result == -1){
+                    $usercount++;
+                    $levelnever_users++;
+                    $this->debug_to_console("Nasiel som level never");
+                  }
+                }
+            }
+
+            // header level 1
+            if ($level1_users > 0 && $groupify){
+              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level1_users.'</span>';
+              $headertext2 .= "Level 1 decription".'</div><br>';
+              array_push($this->content->items, $headertext2);
+            }
+            // level1 items
+            foreach ($enrols as $enrol) {
+                if ($enrol->hasrole == true) {
+                  $accessdays = intval($enrol->lastaccesscourse);
+                  $result = $this->count_days_from_access($accessdays);
+                  if ($result >= $level1_days && $result < $level2_days) {
+                    $output = "<li class='studentstracker-l1' style='background:"."#9dff8c"."'>";
+                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".$this->profile($enrol, $context).
+                            " - level1 item</span></li>";
+                    array_push($this->content->items, $output);
+                    unset($output);
+                  }
+                    // if ($enrol->lastaccesscourse < $level1_days) {
+                    //     $output = "<li class='studentstracker-never' style='background:".$colornever."'>";
+                    //     $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".$this->profile($enrol, $context).
+                    //         " - $this->text_never_content</span></li>";
+                    //     array_push($this->content->items, $output);
+                    //     unset($output);
+                    // }
+                }
+            }
+
+            // header level2
+            if ($level2_users > 0 && $groupify){
+              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level1_users.'</span>';
+              $headertext2 .= "Level 2 decription".'</div><br>';
+              array_push($this->content->items, $headertext2);
+            }
+            // level2 items
+            foreach ($enrols as $enrol) {
+                if ($enrol->hasrole == true) {
+                  $accessdays = intval($enrol->lastaccesscourse);
+                  $result = $this->count_days_from_access($accessdays);
+                  if ($result >= $level2_days && $result < $level3_days) {
+                    $output = "<li class='studentstracker-l2' style='background:"."#9dff8c"."'>";
+                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".$this->profile($enrol, $context).
+                            " - level2 item</span></li>";
+                    array_push($this->content->items, $output);
+                    unset($output);
+                  }
+                }
+            }
+
+            // header level3
+            if ($level2_users > 0 && $groupify){
+              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level1_users.'</span>';
+              $headertext2 .= "Level 3 decription".'</div><br>';
+              array_push($this->content->items, $headertext2);
+            }
+            // level3 items
+            foreach ($enrols as $enrol) {
+                if ($enrol->hasrole == true) {
+                  $accessdays = intval($enrol->lastaccesscourse);
+                  $result = $this->count_days_from_access($accessdays);
+                  if ($result >= $level3_days && $result < $level4_days) {
+                    $output = "<li class='studentstracker-l3' style='background:"."#9dff8c"."'>";
+                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".$this->profile($enrol, $context).
+                            " - level3 item</span></li>";
+                    array_push($this->content->items, $output);
+                    unset($output);
+                  }
+                }
+            }
+
+            // header level4
+            if ($level2_users > 0 && $groupify){
+              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level1_users.'</span>';
+              $headertext2 .= "Level 4 decription".'</div><br>';
+              array_push($this->content->items, $headertext2);
+            }
+            // level4 items
+            foreach ($enrols as $enrol) {
+                if ($enrol->hasrole == true) {
+                  $accessdays = intval($enrol->lastaccesscourse);
+                  $result = $this->count_days_from_access($accessdays);
+                  if ($result >= $level4_days && $result < $level5_days) {
+                    $output = "<li class='studentstracker-l4' style='background:"."#9dff8c"."'>";
+                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".$this->profile($enrol, $context).
+                            " - level4 item</span></li>";
+                    array_push($this->content->items, $output);
+                    unset($output);
+                  }
+                }
+            }
+
+            // header level5
+            if ($level2_users > 0 && $groupify){
+              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level1_users.'</span>';
+              $headertext2 .= "Level 5 decription".'</div><br>';
+              array_push($this->content->items, $headertext2);
+            }
+            // level4 items
+            foreach ($enrols as $enrol) {
+                if ($enrol->hasrole == true) {
+                  $accessdays = intval($enrol->lastaccesscourse);
+                  $result = $this->count_days_from_access($accessdays);
+                  if ($result >= $level5_days) {
+                    $output = "<li class='studentstracker-l5' style='background:"."#9dff8c"."'>";
+                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".$this->profile($enrol, $context).
+                            " - level5 item</span></li>";
+                    array_push($this->content->items, $output);
+                    unset($output);
+                  }
+                }
+            }
+
+            // header level never
+            if ($levelnever_users > 0 && $groupify){
+              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level1_users.'</span>';
+              $headertext2 .= $this->text_never_content.'</div><br>';
+              array_push($this->content->items, $headertext2);
+            }
+            //level never items
+            foreach ($enrols as $enrol) {
+                if ($enrol->hasrole == true) {
+                  $accessdays = intval($enrol->lastaccesscourse);
+                  $result = $this->count_days_from_access($accessdays);
+                  if ($result == -1){
+                    $output = "<li class='studentstracker-never' style='background:".$colornever."'>";
+                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".$this->profile($enrol, $context).
+                              " - $this->text_never_content</span></li>";
+                    array_push($this->content->items, $output);
+                    unset($output);
+                  }
                 }
             }
 
             if ($usercount > 0) {
                 $headertext = '<div class="studentstracker_header"><span class="badge badge-warning">'.$usercount.'</span>';
-                $headertext .= $this->text_header.'</div>';
-                $headertext .= '<div class="studentstracker_header"><span class="badge badge-warning">'.$activeusercount.'</span>';
-                $headertext .= $this->text_header_normal.'</div>';
+                $headertext .= "All users".'</div>';
 
                 $footertext = '<div class="studentstracker_footer">'.$this->text_footer.'</div>';
 
