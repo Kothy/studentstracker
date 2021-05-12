@@ -67,7 +67,10 @@ class block_studentstracker extends block_base {
         return -1;
       } else {
         $dateNow = intval(time());
-        return ($dateNow - $lastaccess)/ 86400;
+        $datediff = $dateNow - $lastaccess;
+        // $this->debug_to_console(date("d-m-Y H:i:s", $dateNow));
+        // $this->debug_to_console(date("d-m-Y H:i:s", $lastaccess));
+        return $datediff / (60 * 60 * 24);
       }
     }
 
@@ -163,9 +166,9 @@ class block_studentstracker extends block_base {
             }
 
             $level1_days = 0;
-            $level2_days = 1;
-            $level3_days = 2;
-            $level4_days = 3;
+            $level2_days = 0.01;
+            $level3_days = 0.02;
+            $level4_days = 0.2;
             $level5_days = 4;
 
             $level1_users = 0;
@@ -183,10 +186,11 @@ class block_studentstracker extends block_base {
                 if ($enrol->hasrole == true) {
                   $accessdays = intval($enrol->lastaccesscourse);
                   $result = $this->count_days_from_access($accessdays);
+                  $this->debug_to_console("Pocet dni od prihlasenia: ".$result);
                   if ($result >= $level1_days && $result < $level2_days){
                     $usercount++;
                     $level1_users++;
-                    $this->debug_to_console("Nasiel som level 1");
+                    // $this->debug_to_console("Nasiel som level 1");
                   }
                 }
             }
@@ -199,7 +203,7 @@ class block_studentstracker extends block_base {
                   if ($result >= $level2_days && $result < $level3_days){
                     $usercount++;
                     $level2_users++;
-                    $this->debug_to_console("Nasiel som level 2");
+                    // $this->debug_to_console("Nasiel som level 2");
                   }
                 }
             }
@@ -212,7 +216,7 @@ class block_studentstracker extends block_base {
                   if ($result >= $level3_days && $result < $level4_days){
                     $usercount++;
                     $level3_users++;
-                    $this->debug_to_console("Nasiel som level 3");
+                    //$this->debug_to_console("Nasiel som level 3");
                   }
                 }
             }
@@ -225,7 +229,7 @@ class block_studentstracker extends block_base {
                   if ($result >= $level4_days && $result < $level5_days){
                     $usercount++;
                     $level4_users++;
-                    $this->debug_to_console("Nasiel som level 4");
+                    //$this->debug_to_console("Nasiel som level 4");
                   }
                 }
             }
@@ -238,7 +242,7 @@ class block_studentstracker extends block_base {
                   if ($result >= $level5_days){
                     $usercount++;
                     $level5_users++;
-                    $this->debug_to_console("Nasiel som level 5");
+                    //$this->debug_to_console("Nasiel som level 5");
                   }
                 }
             }
@@ -251,7 +255,7 @@ class block_studentstracker extends block_base {
                   if ($result == -1){
                     $usercount++;
                     $levelnever_users++;
-                    $this->debug_to_console("Nasiel som level never");
+                    //$this->debug_to_console("Nasiel som level never");
                   }
                 }
             }
@@ -306,7 +310,7 @@ class block_studentstracker extends block_base {
             }
 
             // header level3
-            if ($level2_users > 0 && $groupify){
+            if ($level3_users > 0 && $groupify){
               $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level1_users.'</span>';
               $headertext2 .= "Level 3 decription".'</div><br>';
               array_push($this->content->items, $headertext2);
@@ -327,7 +331,7 @@ class block_studentstracker extends block_base {
             }
 
             // header level4
-            if ($level2_users > 0 && $groupify){
+            if ($level4_users > 0 && $groupify){
               $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level1_users.'</span>';
               $headertext2 .= "Level 4 decription".'</div><br>';
               array_push($this->content->items, $headertext2);
@@ -348,12 +352,12 @@ class block_studentstracker extends block_base {
             }
 
             // header level5
-            if ($level2_users > 0 && $groupify){
+            if ($level5_users > 0 && $groupify){
               $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level1_users.'</span>';
               $headertext2 .= "Level 5 decription".'</div><br>';
               array_push($this->content->items, $headertext2);
             }
-            // level4 items
+            // level5 items
             foreach ($enrols as $enrol) {
                 if ($enrol->hasrole == true) {
                   $accessdays = intval($enrol->lastaccesscourse);
@@ -370,7 +374,7 @@ class block_studentstracker extends block_base {
 
             // header level never
             if ($levelnever_users > 0 && $groupify){
-              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level1_users.'</span>';
+              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$levelnever_users.'</span>';
               $headertext2 .= $this->text_never_content.'</div><br>';
               array_push($this->content->items, $headertext2);
             }
