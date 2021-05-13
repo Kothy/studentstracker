@@ -166,9 +166,9 @@ class block_studentstracker extends block_base {
             }
 
             $level1_days = 0;
-            $level2_days = 0.01;
-            $level3_days = 0.02;
-            $level4_days = 0.2;
+            $level2_days = 0.5;
+            $level3_days = 1;
+            $level4_days = 2;
             $level5_days = 4;
 
             $level1_users = 0;
@@ -289,7 +289,7 @@ class block_studentstracker extends block_base {
 
             // header level2
             if ($level2_users > 0 && $groupify){
-              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level1_users.'</span>';
+              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level2_users.'</span>';
               $headertext2 .= "Level 2 description".'</div><br>';
               array_push($this->content->items, $headertext2);
             }
@@ -310,7 +310,7 @@ class block_studentstracker extends block_base {
 
             // header level3
             if ($level3_users > 0 && $groupify){
-              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level1_users.'</span>';
+              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level3_users.'</span>';
               $headertext2 .= "Level 3 description".'</div><br>';
               array_push($this->content->items, $headertext2);
             }
@@ -331,7 +331,7 @@ class block_studentstracker extends block_base {
 
             // header level4
             if ($level4_users > 0 && $groupify){
-              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level1_users.'</span>';
+              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level4_users.'</span>';
               $headertext2 .= "Level 4 description".'</div><br>';
               array_push($this->content->items, $headertext2);
             }
@@ -352,7 +352,7 @@ class block_studentstracker extends block_base {
 
             // header level5
             if ($level5_users > 0 && $groupify){
-              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level1_users.'</span>';
+              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level5_users.'</span>';
               $headertext2 .= "Level 5 description".'</div><br>';
               array_push($this->content->items, $headertext2);
             }
