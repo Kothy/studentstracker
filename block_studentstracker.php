@@ -47,7 +47,8 @@ class block_studentstracker extends block_base {
     public function specialization() {
         if (isset($this->config)) {
             if (empty($this->config->title)) {
-                $this->title = get_string('defaulttitle', 'block_studentstracker');
+                $this->title = get_string('defaulttitle',
+                'block_studentstracker');
             } else {
                 $this->title = $this->config->title;
             }
@@ -81,7 +82,8 @@ class block_studentstracker extends block_base {
             return $this->content;
         }
 
-        $PAGE->requires->js_call_amd('block_studentstracker/ui', 'init', array());
+        $PAGE->requires->js_call_amd('block_studentstracker/ui', 'init',
+        array());
 
         $context = context_course::instance($COURSE->id);
         if (has_capability('block/studentstracker:view', $context)) {
@@ -97,25 +99,34 @@ class block_studentstracker extends block_base {
             $this->content = new stdClass();
             $this->content->items = array();
 
-            $days = !empty($this->config->days) ? '-'.$this->config->days.' day' : '-'.get_config(
+            $days = !empty($this->config->days) ? '-'.$this->config->days.' day'
+            : '-'.get_config(
                 'studentstracker', 'trackingdays').' day';
-            $dayscritical = !empty($this->config->days_critical) ? '-'.$this->config->days_critical.' day' : '-'.get_config(
+            $dayscritical = !empty($this->config->days_critical) ? '-'.$this->
+            config->days_critical.' day' : '-'.get_config(
                 'studentstracker', 'trackingdays').' day';
-            $colordays = !empty($this->config->color_days) ? $this->config->color_days : get_config(
+            $colordays = !empty($this->config->color_days) ? $this->config->
+            color_days : get_config(
                 'studentstracker', 'colordays');
-            $colordayscritical = !empty($this->config->color_days_critical) ? $this->config->color_days_critical : get_config(
+            $colordayscritical = !empty($this->config->color_days_critical) ?
+            $this->config->color_days_critical : get_config(
                 'studentstracker', 'colordayscritical');
-            $colornever = !empty($this->config->color_never) ? $this->config->color_never : get_config(
+            $colornever = !empty($this->config->color_never) ?
+            $this->config->color_never : get_config(
                 'studentstracker', 'colordaysnever');
 
             // pridala som
-            $colornormal = !empty($this->config->color_normal) ? $this->config->color_normal : get_config(
+            $colornormal = !empty($this->config->color_normal) ?
+            $this->config->color_normal : get_config(
                     'studentstracker', 'colordaysnormal');
 
-            $trackedroles = !empty($this->config->role) ? $this->config->role : explode(",", get_config(
+            $trackedroles = !empty($this->config->role) ?
+            $this->config->role : explode(",", get_config(
                 'studentstracker', 'roletrack'));
-            $trackedgroups = !empty($this->config->groups) ? $this->config->groups : array();
-            $truncate = !empty($this->config->truncate) ? $this->config->truncate : 6;
+            $trackedgroups = !empty($this->config->groups) ?
+            $this->config->groups : array();
+            $truncate = !empty($this->config->truncate) ?
+            $this->config->truncate : 6;
 
             if (!empty($this->config->text_header)) {
                 $this->text_header = $this->config->text_header;
@@ -127,12 +138,14 @@ class block_studentstracker extends block_base {
             if (!empty($this->config->text_header_fine)) {
                 $this->text_header_fine = $this->config->text_header_fine;
             } else {
-                $this->text_header_fine = get_string('text_header_fine', 'block_studentstracker');
+                $this->text_header_fine = get_string('text_header_fine',
+                'block_studentstracker');
             }
             if (!empty($this->config->text_never_content)) {
                 $this->text_never_content = $this->config->text_never_content;
             } else {
-                $this->text_never_content = get_string('text_never_content', 'block_studentstracker');
+                $this->text_never_content = get_string('text_never_content',
+                'block_studentstracker');
             }
 
             if (!empty($this->config->text_header_normal)) {
@@ -145,24 +158,31 @@ class block_studentstracker extends block_base {
             if (!empty($this->config->text_normal_content)) {
                 $this->text_normal_content = $this->config->text_normal_content;
             } else {
-                $this->text_normal_content = get_string('text_normal_content', 'block_studentstracker');
+                $this->text_normal_content = get_string('text_normal_content',
+                'block_studentstracker');
             }
 
             if (!empty($this->config->text_footer_content)) {
                 $this->text_footer = $this->config->text_footer_content;
             } else {
-                $this->text_footer = get_string('text_footer_content', 'block_studentstracker');
+                $this->text_footer = get_string('text_footer_content',
+                'block_studentstracker');
             }
 
-            $enrols = get_enrolled_users($context, '', 0, 'u.*', null, 0, 0, true);
+            $enrols = get_enrolled_users($context, '', 0, 'u.*', null,
+            0, 0, true);
             foreach ($enrols as $enrol) {
-                $enrol->hasrole = studentstracker::has_role($trackedroles, $context->id, $enrol->id);
-                if ((in_array("0", $trackedgroups) == false) && (count($trackedgroups) > 0)) {
-                    if (!(studentstracker::is_in_groups($trackedgroups, $COURSE->id, $enrol->id))) {
+                $enrol->hasrole = studentstracker::has_role($trackedroles,
+                $context->id, $enrol->id);
+                if ((in_array("0", $trackedgroups) == false) &&
+                (count($trackedgroups) > 0)) {
+                    if (!(studentstracker::is_in_groups($trackedgroups,
+                    $COURSE->id, $enrol->id))) {
                         continue;
                     }
                 }
-                $enrol->lastaccesscourse = $this->get_last_access($context->instanceid, $enrol->id);
+                $enrol->lastaccesscourse = $this->get_last_access(
+                  $context->instanceid, $enrol->id);
             }
 
             $level1_days = 0;
@@ -261,7 +281,8 @@ class block_studentstracker extends block_base {
 
             // header level 1
             if ($level1_users > 0 && $groupify){
-              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level1_users.'</span>';
+              $headertext2 = '<br><div class="studentstracker_group">
+              <span class="badge badge-warning">'.$level1_users.'</span>';
               $headertext2 .= "Level 1 description".'</div><br>';
               array_push($this->content->items, $headertext2);
             }
@@ -271,8 +292,10 @@ class block_studentstracker extends block_base {
                   $accessdays = intval($enrol->lastaccesscourse);
                   $result = $this->count_days_from_access($accessdays);
                   if ($result >= $level1_days && $result < $level2_days) {
-                    $output = "<li class='studentstracker-l1' style='background:"."#9dff8c"."'>";
-                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".$this->profile($enrol, $context).
+                    $output = "<li class='studentstracker-l1'
+                    style='background:"."#9dff8c"."'>";
+                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".
+                    $this->profile($enrol, $context).
                             " - level1 item</span></li>";
                     array_push($this->content->items, $output);
                     unset($output);
@@ -289,7 +312,8 @@ class block_studentstracker extends block_base {
 
             // header level2
             if ($level2_users > 0 && $groupify){
-              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level2_users.'</span>';
+              $headertext2 = '<br><div class="studentstracker_group">
+              <span class="badge badge-warning">'.$level2_users.'</span>';
               $headertext2 .= "Level 2 description".'</div><br>';
               array_push($this->content->items, $headertext2);
             }
@@ -299,8 +323,10 @@ class block_studentstracker extends block_base {
                   $accessdays = intval($enrol->lastaccesscourse);
                   $result = $this->count_days_from_access($accessdays);
                   if ($result >= $level2_days && $result < $level3_days) {
-                    $output = "<li class='studentstracker-l2' style='background:"."#9dff8c"."'>";
-                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".$this->profile($enrol, $context).
+                    $output = "<li class='studentstracker-l2'
+                    style='background:"."#9dff8c"."'>";
+                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".
+                    $this->profile($enrol, $context).
                             " - level2 item</span></li>";
                     array_push($this->content->items, $output);
                     unset($output);
@@ -310,7 +336,8 @@ class block_studentstracker extends block_base {
 
             // header level3
             if ($level3_users > 0 && $groupify){
-              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level3_users.'</span>';
+              $headertext2 = '<br><div class="studentstracker_group">
+              <span class="badge badge-warning">'.$level3_users.'</span>';
               $headertext2 .= "Level 3 description".'</div><br>';
               array_push($this->content->items, $headertext2);
             }
@@ -320,8 +347,10 @@ class block_studentstracker extends block_base {
                   $accessdays = intval($enrol->lastaccesscourse);
                   $result = $this->count_days_from_access($accessdays);
                   if ($result >= $level3_days && $result < $level4_days) {
-                    $output = "<li class='studentstracker-l3' style='background:"."#9dff8c"."'>";
-                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".$this->profile($enrol, $context).
+                    $output = "<li class='studentstracker-l3'
+                    style='background:"."#9dff8c"."'>";
+                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".
+                    $this->profile($enrol, $context).
                             " - level3 item</span></li>";
                     array_push($this->content->items, $output);
                     unset($output);
@@ -331,7 +360,8 @@ class block_studentstracker extends block_base {
 
             // header level4
             if ($level4_users > 0 && $groupify){
-              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level4_users.'</span>';
+              $headertext2 = '<br><div class="studentstracker_group">
+              <span class="badge badge-warning">'.$level4_users.'</span>';
               $headertext2 .= "Level 4 description".'</div><br>';
               array_push($this->content->items, $headertext2);
             }
@@ -341,8 +371,10 @@ class block_studentstracker extends block_base {
                   $accessdays = intval($enrol->lastaccesscourse);
                   $result = $this->count_days_from_access($accessdays);
                   if ($result >= $level4_days && $result < $level5_days) {
-                    $output = "<li class='studentstracker-l4' style='background:"."#9dff8c"."'>";
-                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".$this->profile($enrol, $context).
+                    $output = "<li class='studentstracker-l4'
+                    style='background:"."#9dff8c"."'>";
+                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".
+                    $this->profile($enrol, $context).
                             " - level4 item</span></li>";
                     array_push($this->content->items, $output);
                     unset($output);
@@ -352,7 +384,8 @@ class block_studentstracker extends block_base {
 
             // header level5
             if ($level5_users > 0 && $groupify){
-              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$level5_users.'</span>';
+              $headertext2 = '<br><div class="studentstracker_group">
+              <span class="badge badge-warning">'.$level5_users.'</span>';
               $headertext2 .= "Level 5 description".'</div><br>';
               array_push($this->content->items, $headertext2);
             }
@@ -362,8 +395,10 @@ class block_studentstracker extends block_base {
                   $accessdays = intval($enrol->lastaccesscourse);
                   $result = $this->count_days_from_access($accessdays);
                   if ($result >= $level5_days) {
-                    $output = "<li class='studentstracker-l5' style='background:"."#9dff8c"."'>";
-                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".$this->profile($enrol, $context).
+                    $output = "<li class='studentstracker-l5'
+                    style='background:"."#9dff8c"."'>";
+                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;"
+                    .$this->profile($enrol, $context).
                             " - level5 item</span></li>";
                     array_push($this->content->items, $output);
                     unset($output);
@@ -373,7 +408,9 @@ class block_studentstracker extends block_base {
 
             // header level never
             if ($levelnever_users > 0 && $groupify){
-              $headertext2 = '<br><div class="studentstracker_group"><span class="badge badge-warning">'.$levelnever_users.'</span>';
+              $headertext2 = '<br><div class="studentstracker_group">
+              <span class="badge badge-warning">'
+              .$levelnever_users.'</span>';
               $headertext2 .= $this->text_never_content.'</div><br>';
               array_push($this->content->items, $headertext2);
             }
@@ -383,8 +420,10 @@ class block_studentstracker extends block_base {
                   $accessdays = intval($enrol->lastaccesscourse);
                   $result = $this->count_days_from_access($accessdays);
                   if ($result == -1){
-                    $output = "<li class='studentstracker-never' style='background:".$colornever."'>";
-                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".$this->profile($enrol, $context).
+                    $output = "<li class='studentstracker-never'
+                    style='background:".$colornever."'>";
+                    $output .= $this->messaging($enrol)."<span> &nbsp;&nbsp;".
+                    $this->profile($enrol, $context).
                               " - $this->text_never_content</span></li>";
                     array_push($this->content->items, $output);
                     unset($output);
@@ -393,24 +432,27 @@ class block_studentstracker extends block_base {
             }
 
             if ($usercount > 0) {
-                $headertext = '<div class="studentstracker_header"><span class="badge badge-warning">'.$usercount.'</span>';
+                $headertext = '<div class="studentstracker_header">
+                <span class="badge badge-warning">'.$usercount.'</span>';
                 $headertext .= "All users".'</div>';
-
-                $footertext = '<div class="studentstracker_footer"></div><button type="button" class="badge badge-warning">'.$this->text_footer.'</button>';
-
-
+                $footertext = '<div class="studentstracker_footer">'
+                .'<button type="button" class="badge badge-warning">'
+                .$this->text_footer.'</button>'.'</div>';
             } else {
-                $headertext = '<div class="studentstracker_header">'.$this->text_header_fine.'</div>';
+                $headertext = '<div class="studentstracker_header">'.
+                $this->text_header_fine.'</div>';
                 $footertext = '';
             }
 
             $this->content->text = $headertext;
-            $this->content->text .= "<ul id='studentstracker-list' data-show=". $truncate .">";
+            $this->content->text .= "<ul id='studentstracker-list' data-show=".
+            $truncate .">";
             foreach ($this->content->items as $item) {
                 $this->content->text .= $item;
             }
             $this->content->text .= "</ul>";
-            $this->content->text .= "<center><div id=\"tracker_showmore\"></div>\n<div id=\"tracker_showless\"></div></center>";
+            $this->content->text .= "<center><div id=\"tracker_showmore\">
+            </div>\n<div id=\"tracker_showless\"></div></center>";
             $this->content->text .= $footertext;
 
             return $this->content;
@@ -424,13 +466,16 @@ class block_studentstracker extends block_base {
         if ($user->id) {
             $url->param('id', $userid);
         }
-        return html_writer::link($url, "<img src=\"../pix/t/message.png\">", array());
+        return html_writer::link($url, "<img src=\"../pix/t/message.png\">",
+        array());
     }
 
     private function profile($user, $context) {
         global $DB;
-        $url = new moodle_url('/user/view.php', array('id' => $user->id, 'course' => $context->instanceid));
-        return html_writer::link($url, "$user->firstname $user->lastname", array());
+        $url = new moodle_url('/user/view.php', array('id' => $user->id,
+        'course' => $context->instanceid));
+        return html_writer::link($url, "$user->firstname $user->lastname",
+        array());
     }
 
     public function applicable_formats() {
@@ -439,7 +484,8 @@ class block_studentstracker extends block_base {
 
     private function get_last_access($courseid, $userid) {
         global $DB;
-        $lastaccess = $DB->get_field('user_lastaccess', 'timeaccess', array('courseid' => $courseid, 'userid' => $userid));
+        $lastaccess = $DB->get_field('user_lastaccess', 'timeaccess', array(
+          'courseid' => $courseid, 'userid' => $userid));
         return $lastaccess;
     }
 }
