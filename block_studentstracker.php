@@ -396,7 +396,8 @@ class block_studentstracker extends block_base {
                 $headertext = '<div class="studentstracker_header"><span class="badge badge-warning">'.$usercount.'</span>';
                 $headertext .= "All users".'</div>';
 
-                $footertext = '<div class="studentstracker_footer">'.$this->text_footer.'</div>';
+                $footertext = '<div class="studentstracker_footer"></div><button type="button" class="badge badge-warning">'.$this->text_footer.'</button>';
+
 
             } else {
                 $headertext = '<div class="studentstracker_header">'.$this->text_header_fine.'</div>';
