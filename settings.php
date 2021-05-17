@@ -35,13 +35,19 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configtext(
         'studentstracker/trackingdays',
         get_string('days', 'block_studentstracker'),
-        get_string('days_desc', 'block_studentstracker'), '3'));
+        get_string('days_desc', 'block_studentstracker'), '1'));
 
     $settings->add(new admin_setting_configtext(
         'studentstracker/trackingdayscritical',
         get_string('days_critical', 'block_studentstracker'),
         get_string('days_critical_desc', 'block_studentstracker'),
-        '6'));
+        '7'));
+
+    $settings->add(new admin_setting_configtext(
+        'studentstracker/trackingdaysfatal',
+        get_string('days_fatal', 'block_studentstracker'),
+        get_string('days_fatal_desc', 'block_studentstracker'),
+        '28'));
 
     $settings->add(new admin_setting_configcolourpicker(
         'studentstracker/colordays',
@@ -54,6 +60,12 @@ if ($ADMIN->fulltree) {
         get_string('color_days_critical', 'block_studentstracker'),
         get_string('color_days_critical_desc', 'block_studentstracker'),
         '#FECFCF', null));
+
+    $settings->add(new admin_setting_configcolourpicker(
+        'studentstracker/colordaysfatal',
+        get_string('color_days_fatal', 'block_studentstracker'),
+        get_string('color_days_fatal_desc', 'block_studentstracker'),
+        '#FF0000', null));
 
     $settings->add(new admin_setting_configcolourpicker(
         'studentstracker/colordaysnever',
@@ -73,4 +85,34 @@ if ($ADMIN->fulltree) {
         get_string('roletrack_desc', 'block_studentstracker'),
         array('5'),
         $rolesarray));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'studentstracker/activechecked',
+        get_string('checked', 'block_studentstracker'),
+        get_string('checked_desc', 'block_studentstracker'),
+        1));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'studentstracker/group1checked',
+        get_string('checked', 'block_studentstracker'),
+        get_string('checked_desc', 'block_studentstracker'),
+        1));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'studentstracker/group2checked',
+        get_string('checked', 'block_studentstracker'),
+        get_string('checked_desc', 'block_studentstracker'),
+        1));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'studentstracker/group3checked',
+        get_string('checked', 'block_studentstracker'),
+        get_string('checked_desc', 'block_studentstracker'),
+        1));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'studentstracker/absentchecked',
+        get_string('checked', 'block_studentstracker'),
+        get_string('checked_desc', 'block_studentstracker'),
+        1));
 }

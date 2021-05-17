@@ -54,19 +54,21 @@ class block_studentstracker_edit_form extends block_edit_form {
             $mform->setDefault('config_groups', array());
 
             $mform->addElement('text', 'config_truncate', get_string('truncate', 'block_studentstracker'));
-            $mform->setDefault('config_truncate', 6);
+            $mform->setDefault('config_truncate', 10);
             $mform->setType('config_truncate', PARAM_INT);
 
-            $mform->addElement('text', 'config_text_header_fine', get_string('text_header_fine', 'block_studentstracker'));
-            $mform->setDefault('config_text_header_fine', get_string('text_header_fine', 'block_studentstracker'));
-            $mform->setType('config_text_header_fine', PARAM_TEXT);
-
-            $mform->addElement('text', 'config_text_footer', get_string('text_footer', 'block_studentstracker'));
-            $mform->setDefault('config_text_footer', get_string('text_footer_content', 'block_studentstracker'));
-            $mform->setType('config_text_footer', PARAM_TEXT);
+            // $mform->addElement('text', 'config_text_header_fine', get_string('text_header_fine', 'block_studentstracker'));
+            // $mform->setDefault('config_text_header_fine', get_string('text_header_fine', 'block_studentstracker'));
+            // $mform->setType('config_text_header_fine', PARAM_TEXT);
+            //
+            // $mform->addElement('text', 'config_text_footer', get_string('text_footer', 'block_studentstracker'));
+            // $mform->setDefault('config_text_footer', get_string('text_footer_content', 'block_studentstracker'));
+            // $mform->setType('config_text_footer', PARAM_TEXT);
         }
 
         $mform->addElement('header', 'configheader', get_string('tracking_groups', 'block_studentstracker'));
+
+        // ACTIVE
 
         $mform->addElement('html', '<p><h3 style="color: orange;">Active users</h3></p>');
 
@@ -77,11 +79,15 @@ class block_studentstracker_edit_form extends block_edit_form {
         if (has_capability('block/studentstracker:editadvance', context_course::instance($COURSE->id)) or is_siteadmin($USER->id)) {
 
             $mform->addElement('text', 'config_text_active', get_string('group_desc', 'block_studentstracker'));
-            $mform->setDefault('config_text_active', get_string('text_never_content', 'block_studentstracker'));
+            $mform->setDefault('config_text_active', get_string('active_desc', 'block_studentstracker'));
             $mform->setType('config_text_active', PARAM_TEXT);
         }
 
-        $mform->addElement('advcheckbox', 'active_tracking', get_string('track_active_students', 'block_studentstracker'));
+        $mform->addElement('advcheckbox', 'active_tracking', get_string('group_track', 'block_studentstracker'));
+        $mform->setDefault('active_tracking', get_config('studentstracker', 'activechecked'));
+        $mform->setType('active_tracking', PARAM_BOOL);
+
+        // GROUP1
 
         $mform->addElement('html', '<p><h3 style="color: orange;">Group 1</h3></p>');
 
@@ -92,13 +98,19 @@ class block_studentstracker_edit_form extends block_edit_form {
         if (has_capability('block/studentstracker:editadvance', context_course::instance($COURSE->id)) or is_siteadmin($USER->id)) {
 
             $mform->addElement('text', 'config_text_normal', get_string('group_desc', 'block_studentstracker'));
-            $mform->setDefault('config_text_normal', get_string('text_never_content', 'block_studentstracker'));
+            $mform->setDefault('config_text_normal', get_string('group1_desc', 'block_studentstracker'));
             $mform->setType('config_text_normal', PARAM_TEXT);
 
             $mform->addElement('text', 'config_days', get_string('group_days', 'block_studentstracker'));
             $mform->setDefault('config_days', get_config('studentstracker', 'trackingdays'));
             $mform->setType('config_days', PARAM_INT);
         }
+
+        $mform->addElement('advcheckbox', 'group1_tracking', get_string('group_track', 'block_studentstracker'));
+        $mform->setDefault('active_tracking', get_config('studentstracker', 'group1checked'));
+        $mform->setType('active_tracking', PARAM_BOOL);
+
+        // GROUP 2
 
         $mform->addElement('html', '<p><h3 style="color: orange;">Group 2</h3></p>');
 
@@ -109,7 +121,7 @@ class block_studentstracker_edit_form extends block_edit_form {
         if (has_capability('block/studentstracker:editadvance', context_course::instance($COURSE->id)) or is_siteadmin($USER->id)) {
 
             $mform->addElement('text', 'config_text_critical', get_string('group_desc', 'block_studentstracker'));
-            $mform->setDefault('config_text_critical', get_string('text_never_content', 'block_studentstracker'));
+            $mform->setDefault('config_text_critical', get_string('group2_desc', 'block_studentstracker'));
             $mform->setType('config_text_critical', PARAM_TEXT);
 
             $mform->addElement('text', 'config_days_critical', get_string('group_days', 'block_studentstracker'));
@@ -117,22 +129,34 @@ class block_studentstracker_edit_form extends block_edit_form {
             $mform->setType('config_days_critical', PARAM_INT);
         }
 
+        $mform->addElement('advcheckbox', 'group2_tracking', get_string('group_track', 'block_studentstracker'));
+        $mform->setDefault('active_tracking', get_config('studentstracker', 'group2checked'));
+        $mform->setType('active_tracking', PARAM_BOOL);
+
+        // GROUP 3
+
         $mform->addElement('html', '<p><h3 style="color: orange;">Group 3</h3></p>');
 
         $mform->addElement('text', 'config_color_days_fatal', get_string('group_color', 'block_studentstracker'));
-        $mform->setDefault('config_color_days_fatal',  get_config('studentstracker', 'colordayscritical'));
+        $mform->setDefault('config_color_days_fatal',  get_config('studentstracker', 'colordaysfatal'));
         $mform->setType('config_color_days_fatal', PARAM_RAW);
 
         if (has_capability('block/studentstracker:editadvance', context_course::instance($COURSE->id)) or is_siteadmin($USER->id)) {
 
             $mform->addElement('text', 'config_text_fatal', get_string('group_desc', 'block_studentstracker'));
-            $mform->setDefault('config_text_fatal', get_string('text_never_content', 'block_studentstracker'));
+            $mform->setDefault('config_text_fatal', get_string('group3_desc', 'block_studentstracker'));
             $mform->setType('config_text_fatal', PARAM_TEXT);
 
             $mform->addElement('text', 'config_days_fatal', get_string('group_days', 'block_studentstracker'));
-            $mform->setDefault('config_days_fatal', get_config('studentstracker', 'trackingdayscritical'));
+            $mform->setDefault('config_days_fatal', get_config('studentstracker', 'trackingdaysfatal'));
             $mform->setType('config_days_fatal', PARAM_INT);
         }
+
+        $mform->addElement('advcheckbox', 'group3_tracking', get_string('group_track', 'block_studentstracker'));
+        $mform->setDefault('active_tracking', get_config('studentstracker', 'group3checked'));
+        $mform->setType('active_tracking', PARAM_BOOL);
+
+        // ABSENT
 
         $mform->addElement('html', '<p><h3 style="color: orange;">Enrolled users that never accessed the course</h3></p>');
 
@@ -146,5 +170,9 @@ class block_studentstracker_edit_form extends block_edit_form {
             $mform->setDefault('config_text_never', get_string('text_never_content', 'block_studentstracker'));
             $mform->setType('config_text_never', PARAM_TEXT);
         }
+
+        $mform->addElement('advcheckbox', 'inactive_tracking', get_string('group_track', 'block_studentstracker'));
+        $mform->setDefault('active_tracking', get_config('studentstracker', 'absentchecked'));
+        $mform->setType('active_tracking', PARAM_BOOL);
     }
 }
