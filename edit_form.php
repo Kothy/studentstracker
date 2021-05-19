@@ -107,8 +107,8 @@ class block_studentstracker_edit_form extends block_edit_form {
         }
 
         $mform->addElement('advcheckbox', 'group1_tracking', get_string('group_track', 'block_studentstracker'));
-        $mform->setDefault('active_tracking', get_config('studentstracker', 'group1checked'));
-        $mform->setType('active_tracking', PARAM_BOOL);
+        $mform->setDefault('group1_tracking', get_config('studentstracker', 'group1checked'));
+        $mform->setType('group1_tracking', PARAM_BOOL);
 
         // GROUP 2
 
@@ -130,8 +130,8 @@ class block_studentstracker_edit_form extends block_edit_form {
         }
 
         $mform->addElement('advcheckbox', 'group2_tracking', get_string('group_track', 'block_studentstracker'));
-        $mform->setDefault('active_tracking', get_config('studentstracker', 'group2checked'));
-        $mform->setType('active_tracking', PARAM_BOOL);
+        $mform->setDefault('group2_tracking', get_config('studentstracker', 'group2checked'));
+        $mform->setType('group2_tracking', PARAM_BOOL);
 
         // GROUP 3
 
@@ -153,8 +153,8 @@ class block_studentstracker_edit_form extends block_edit_form {
         }
 
         $mform->addElement('advcheckbox', 'group3_tracking', get_string('group_track', 'block_studentstracker'));
-        $mform->setDefault('active_tracking', get_config('studentstracker', 'group3checked'));
-        $mform->setType('active_tracking', PARAM_BOOL);
+        $mform->setDefault('group3_tracking', get_config('studentstracker', 'group3checked'));
+        $mform->setType('group3_tracking', PARAM_BOOL);
 
         // ABSENT
 
@@ -172,7 +172,7 @@ class block_studentstracker_edit_form extends block_edit_form {
         }
 
         $mform->addElement('advcheckbox', 'inactive_tracking', get_string('group_track', 'block_studentstracker'));
-        $mform->setDefault('active_tracking', get_config('studentstracker', 'absentchecked'));
-        $mform->setType('active_tracking', PARAM_BOOL);
+        $mform->setDefault('inactive_tracking', get_config('studentstracker', 'absentchecked'));
+        $mform->setType('inactive_tracking', PARAM_BOOL);
     }
 }

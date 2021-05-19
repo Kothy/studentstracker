@@ -120,6 +120,10 @@ class block_studentstracker extends block_base {
             $this->config->color_normal : get_config(
                     'studentstracker', 'colordaysnormal');
 
+            $colorfatal = !empty($this->config->color_fatal) ?
+            $this->config->color_fatal : get_config(
+                    'studentstracker', 'colordaysfatal');
+
             $trackedroles = !empty($this->config->role) ?
             $this->config->role : explode(",", get_config(
                 'studentstracker', 'roletrack'));
