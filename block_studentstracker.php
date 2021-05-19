@@ -261,11 +261,6 @@ class block_studentstracker extends block_base {
             $levelnever_users = 0;
 
             $groupify = True;
-            // $groupifyGroup1Display = True;
-            // $groupifyGroup2Display = True;
-            // $groupifyGroup3Display = True;
-            // $groupifyGroupActiveDisplay = True;
-            // $groupifyGroupNeverDisplay = True;
 
             $groupifyGroupNeverDisplay = !empty($this->config->neverDisplay) ?
             $this->config->neverDisplay : get_config('studentstracker', 'absentchecked');
@@ -276,7 +271,7 @@ class block_studentstracker extends block_base {
             $groupifyGroup1Display = !empty($this->config->g1Display) ?
             $this->config->g1Display : get_config('studentstracker', 'group1checked');
 
-            $groupifyGroup3Display = !empty($this->config->g2Display) ?
+            $groupifyGroup2Display = !empty($this->config->g2Display) ?
             $this->config->g2Display : get_config('studentstracker', 'group2checked');
 
             $groupifyGroup3Display = !empty($this->config->g3Display) ?
