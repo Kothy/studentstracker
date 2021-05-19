@@ -197,10 +197,10 @@ class block_studentstracker extends block_base {
             $level4_users = 0;
             $levelnever_users = 0;
 
-            $groupify = False;
+            $groupify = True;
             $groupifyGroup1Display = True;
             $groupifyGroup2Display = True;
-            $groupifyGroup3Display = False;
+            $groupifyGroup3Display = True;
             $groupifyGroupActiveDisplay = True;
             $groupifyGroupNeverDisplay = True;
 
