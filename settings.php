@@ -32,22 +32,52 @@ if ($ADMIN->fulltree) {
         $rolesarray[$role->id] = $role->shortname;
     }
 
-    $settings->add(new admin_setting_configtext(
-        'studentstracker/trackingdays',
-        get_string('days', 'block_studentstracker'),
-        get_string('days_desc', 'block_studentstracker'), '1'));
+    // $settings->add(new admin_setting_configtext(
+    //     'studentstracker/trackingdays',
+    //     get_string('days', 'block_studentstracker'),
+    //     get_string('days_desc', 'block_studentstracker'), '1'));
+    //
+    // $settings->add(new admin_setting_configtext(
+    //     'studentstracker/trackingdayscritical',
+    //     get_string('days_critical', 'block_studentstracker'),
+    //     get_string('days_critical_desc', 'block_studentstracker'),
+    //     '7'));
+    //
+    // $settings->add(new admin_setting_configtext(
+    //     'studentstracker/trackingdaysfatal',
+    //     get_string('days_fatal', 'block_studentstracker'),
+    //     get_string('days_fatal_desc', 'block_studentstracker'),
+    //     '28'));
+    //
+    // $settings->add(new admin_setting_configtext(
+    //   'studentstracker/desc_active',
+    //   get_string('days_fatal', 'block_studentstracker'),
+    //   get_string('days_fatal_desc', 'block_studentstracker'),
+    //   'Active'));
+    //
+    // $settings->add(new admin_setting_configtext(
+    //     'studentstracker/desc_never',
+    //     get_string('days_fatal', 'block_studentstracker'),
+    //     get_string('days_fatal_desc', 'block_studentstracker'),
+    //     'Never accessed'));
 
     $settings->add(new admin_setting_configtext(
-        'studentstracker/trackingdayscritical',
-        get_string('days_critical', 'block_studentstracker'),
-        get_string('days_critical_desc', 'block_studentstracker'),
-        '7'));
+      'studentstracker/desc_group1',
+      get_string('days_fatal', 'block_studentstracker'),
+      get_string('days_fatal_desc', 'block_studentstracker'),
+      'Group 1'));
 
     $settings->add(new admin_setting_configtext(
-        'studentstracker/trackingdaysfatal',
+      'studentstracker/desc_group2',
+      get_string('days_fatal', 'block_studentstracker'),
+      get_string('days_fatal_desc', 'block_studentstracker'),
+      'Group 2'));
+
+    $settings->add(new admin_setting_configtext(
+        'studentstracker/desc_group3',
         get_string('days_fatal', 'block_studentstracker'),
         get_string('days_fatal_desc', 'block_studentstracker'),
-        '28'));
+        'Group 3'));
 
     $settings->add(new admin_setting_configcolourpicker(
         'studentstracker/colordays',

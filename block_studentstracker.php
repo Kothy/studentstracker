@@ -164,15 +164,14 @@ class block_studentstracker extends block_base {
             //$this->debug_to_console("Color group2: ".$group2Color);
 
             // color group3
-            $group3Color = !empty($this->config->color_fatal) ?
-            $this->config->color_fatal : get_config('studentstracker', 'colordaysfatal');
+            $group3Color = !empty($this->config->color_days_fatal) ?
+            $this->config->color_days_fatal : get_config('studentstracker', 'colordaysfatal');
             //$this->debug_to_console("Color group3: ".$group3Color);
 
             // never color
-            $colorNever = !empty($this->config->color_never) ?
-            $this->config->color_never : get_config(
-                'studentstracker', 'colordaysnever');
-            //$this->debug_to_console("Color never: ".$colorNever);
+            $colorNever = !empty($this->config->color_days_absent) ?
+            $this->config->color_days_absent : get_config('studentstracker', 'colordaysnever');
+            $this->debug_to_console("Color never: ".$colorNever);
 
             $group1Desc = "Groupka 1";
             $group2Desc = "Groupka 2";
@@ -181,14 +180,29 @@ class block_studentstracker extends block_base {
             $descNever = "Nikdy";
 
             //desc active
-            $descActive = !empty($this->config->desc_active) ?
-            $this->config->desc_never : get_string('active_desc', 'block_studentstracker');
-            //$this->debug_to_console("Popis active: ".$descActive);
+            $descActive = !empty($this->config->text_active) ?
+            $this->config->text_active : get_string('active_desc', 'block_studentstracker');
+            $this->debug_to_console("Popis active: ".$descActive);
+
+            //desc group1
+            $group1Desc = !empty($this->config->text_normal) ?
+            $this->config->text_normal : get_string('active_desc', 'block_studentstracker');
+            $this->debug_to_console("Popis group1: ".$group1Desc);
+
+            //desc group2
+            $group2Desc = !empty($this->config->text_critical) ?
+            $this->config->text_critical: get_string('active_desc', 'block_studentstracker');
+            $this->debug_to_console("Popis group2: ".$group2Desc);
+
+            //desc group3
+            $group3Desc = !empty($this->config->text_fatal) ?
+            $this->config->text_fatal : get_string('active_desc', 'block_studentstracker');
+            $this->debug_to_console("Popis group3: ".$group3Desc);
 
             //desc never
-            $descNever = !empty($this->config->desc_never) ?
-            $this->config->desc_never : get_string('text_never_content', 'block_studentstracker');
-            //$this->debug_to_console("Popis never: ".$descNever);
+            $descNever = !empty($this->config->text_never) ?
+            $this->config->text_never : get_string('text_never_content', 'block_studentstracker');
+            $this->debug_to_console("Popis never: ".$descNever);
 
             $trackedroles = !empty($this->config->role) ?
             $this->config->role : explode(",", get_config(
@@ -222,6 +236,7 @@ class block_studentstracker extends block_base {
             } else {
                 $this->text_header_normal = "Users recently present";
             }
+            //$this->debug_to_console("text header normal - ".$this->text_header_normal);
 
             // pridala som
             if (!empty($this->config->text_normal_content)) {
@@ -230,6 +245,7 @@ class block_studentstracker extends block_base {
                 $this->text_normal_content = get_string('text_normal_content',
                 'block_studentstracker');
             }
+            //$this->debug_to_console("text normal content - ".$this->text_normal_content);
 
             if (!empty($this->config->text_footer_content)) {
                 $this->text_footer = $this->config->text_footer_content;
@@ -282,11 +298,11 @@ class block_studentstracker extends block_base {
             $this->debug_to_console("Zobrazuj group2 ".$groupifyGroup2Display);
             $this->debug_to_console("Zobrazuj group3 ".$groupifyGroup3Display);
 
-            $groupifyGroup1Display = False;
+            $groupifyGroup1Display = True;
             $groupifyGroup2Display = True;
-            $groupifyGroup3Display = False;
+            $groupifyGroup3Display = True;
             $groupifyGroupActiveDisplay = True;
-            $groupifyGroupNeverDisplay = False;
+            $groupifyGroupNeverDisplay = True;
 
             $groupArray = array();
             if ($groupifyGroup1Display){
@@ -304,15 +320,15 @@ class block_studentstracker extends block_base {
             } else {
               array_push($groupArray, -1);
             }
-            $this->debug_to_console($groupArray);
+            //$this->debug_to_console($groupArray);
             //$this->debug_to_console($this->getGroup($groupArray, 2.1). "***getGroup");
 
             foreach ($enrols as $enrol) {
                 if ($enrol->hasrole == true) {
                   $accessdays = intval($enrol->lastaccesscourse);
                   $result = $this->count_days_from_access($accessdays);
-                  $this->debug_to_console("Pocet dni: ". $result);
-                  $this->debug_to_console("Patri do skupiny: ".$this->getGroup($groupArray, $result));
+                  //$this->debug_to_console("Pocet dni: ". $result);
+                  //$this->debug_to_console("Patri do skupiny: ".$this->getGroup($groupArray, $result));
                 }
             }
 
@@ -321,7 +337,7 @@ class block_studentstracker extends block_base {
                 if ($enrol->hasrole == true && $groupifyGroupActiveDisplay == True) {
                   $accessdays = intval($enrol->lastaccesscourse);
                   $result = $this->count_days_from_access($accessdays);
-                  $this->debug_to_console("Pocet dni aktiv: ". $result);
+                  //$this->debug_to_console("Pocet dni aktiv: ". $result);
                   if ($result >= 0 && $result <= 1) {//($result >= $active_days && $result < $level2_days)
                     $usercount++;
                     $active_users++;

@@ -161,7 +161,7 @@ class block_studentstracker_edit_form extends block_edit_form {
         $mform->addElement('html', '<p><h3 style="color: orange;">Enrolled users that never accessed the course</h3></p>');
 
         $mform->addElement('text', 'config_color_days_absent', get_string('group_color', 'block_studentstracker'));
-        $mform->setDefault('config_color_days_absent',  get_config('studentstracker', 'colordayscritical'));
+        $mform->setDefault('config_color_days_absent',  get_config('studentstracker', 'colordaysnever'));
         $mform->setType('config_color_days_absent', PARAM_RAW);
 
         if (has_capability('block/studentstracker:editadvance', context_course::instance($COURSE->id)) or is_siteadmin($USER->id)) {
