@@ -67,3 +67,4 @@ $string['group3_desc'] = 'Inactive for 28+ days';
 $string['active_desc'] = 'Active in the last 24h';
 $string['checked'] = '';
 $string['checked_desc'] = '';
+$string['all_users'] = 'All users';

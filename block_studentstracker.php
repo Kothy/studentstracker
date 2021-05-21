@@ -173,11 +173,11 @@ class block_studentstracker extends block_base {
             $this->config->color_days_absent : get_config('studentstracker', 'colordaysnever');
             $this->debug_to_console("Color never: ".$colorNever);
 
-            $group1Desc = "Groupka 1";
-            $group2Desc = "Groupka 2";
-            $group3Desc = "Groupka 3";
-            $descActive = "Aktivny";
-            $descNever = "Nikdy";
+            $group1Desc = "";
+            $group2Desc = "";
+            $group3Desc = "";
+            $descActive = "";
+            $descNever = "";
 
             //desc active
             $descActive = !empty($this->config->text_active) ?
@@ -186,23 +186,23 @@ class block_studentstracker extends block_base {
 
             //desc group1
             $group1Desc = !empty($this->config->text_normal) ?
-            $this->config->text_normal : get_string('active_desc', 'block_studentstracker');
-            $this->debug_to_console("Popis group1: ".$group1Desc);
+            $this->config->text_normal : get_string('group1_desc', 'block_studentstracker');
+            //$this->debug_to_console("Popis group1: ".$group1Desc);
 
             //desc group2
             $group2Desc = !empty($this->config->text_critical) ?
-            $this->config->text_critical: get_string('active_desc', 'block_studentstracker');
-            $this->debug_to_console("Popis group2: ".$group2Desc);
+            $this->config->text_critical: get_string('group2_desc', 'block_studentstracker');
+            //$this->debug_to_console("Popis group2: ".$group2Desc);
 
             //desc group3
             $group3Desc = !empty($this->config->text_fatal) ?
-            $this->config->text_fatal : get_string('active_desc', 'block_studentstracker');
-            $this->debug_to_console("Popis group3: ".$group3Desc);
+            $this->config->text_fatal : get_string('group3_desc', 'block_studentstracker');
+            //$this->debug_to_console("Popis group3: ".$group3Desc);
 
             //desc never
             $descNever = !empty($this->config->text_never) ?
             $this->config->text_never : get_string('text_never_content', 'block_studentstracker');
-            $this->debug_to_console("Popis never: ".$descNever);
+            //$this->debug_to_console("Popis never: ".$descNever);
 
             $trackedroles = !empty($this->config->role) ?
             $this->config->role : explode(",", get_config(
@@ -215,7 +215,8 @@ class block_studentstracker extends block_base {
             if (!empty($this->config->text_header)) {
                 $this->text_header = $this->config->text_header;
             } else {
-                $this->text_header = "All users";
+                $this->text_header =  get_string('all_users',
+                'block_studentstracker');
             }
 
             if (!empty($this->config->text_header_fine)) {
@@ -236,7 +237,6 @@ class block_studentstracker extends block_base {
             } else {
                 $this->text_header_normal = "Users recently present";
             }
-            //$this->debug_to_console("text header normal - ".$this->text_header_normal);
 
             // pridala som
             if (!empty($this->config->text_normal_content)) {
@@ -245,7 +245,6 @@ class block_studentstracker extends block_base {
                 $this->text_normal_content = get_string('text_normal_content',
                 'block_studentstracker');
             }
-            //$this->debug_to_console("text normal content - ".$this->text_normal_content);
 
             if (!empty($this->config->text_footer_content)) {
                 $this->text_footer = $this->config->text_footer_content;
@@ -275,34 +274,34 @@ class block_studentstracker extends block_base {
             $level3_users = 0;
             $level4_users = 0;
             $levelnever_users = 0;
-
             $groupify = True;
 
-            $groupifyGroupNeverDisplay = !empty($this->config->neverDisplay) ?
-            $this->config->neverDisplay : get_config('studentstracker', 'absentchecked');
+            $groupifyGroupNeverDisplay = !empty($this->config->inactive_tracking) ?
+            $this->config->inactive_tracking : get_config('studentstracker', 'absentchecked');
 
-            $groupifyGroupActiveDisplay = !empty($this->config->activeDisplay) ?
-            $this->config->activeDisplay : get_config('studentstracker', 'activechecked');
+            $groupifyGroupActiveDisplay = !empty($this->config->active_tracking) ?
+            $this->config->active_tracking : get_config('studentstracker', 'activechecked');
 
-            $groupifyGroup1Display = !empty($this->config->g1Display) ?
-            $this->config->g1Display : get_config('studentstracker', 'group1checked');
+            $groupifyGroup1Display = !empty($this->config->group1_tracking) ?
+            $this->config->group1_tracking : get_config('studentstracker', 'group1checked');
 
-            $groupifyGroup2Display = !empty($this->config->g2Display) ?
-            $this->config->g2Display : get_config('studentstracker', 'group2checked');
+            $groupifyGroup2Display = !empty($this->config->group2_tracking) ?
+            $this->config->group2_tracking : get_config('studentstracker', 'group2checked');
 
-            $groupifyGroup3Display = !empty($this->config->g3Display) ?
-            $this->config->g3Display : get_config('studentstracker', 'group3checked');
+            $groupifyGroup3Display = !empty($this->config->group3_tracking) ?
+            $this->config->group3_tracking : get_config('studentstracker', 'group3checked');
+
             $this->debug_to_console("Zobrazuj activnych ".$groupifyGroupActiveDisplay);
             $this->debug_to_console("Zobrazuj nikdy ".$groupifyGroupNeverDisplay);
             $this->debug_to_console("Zobrazuj group1 ".$groupifyGroup1Display);
             $this->debug_to_console("Zobrazuj group2 ".$groupifyGroup2Display);
             $this->debug_to_console("Zobrazuj group3 ".$groupifyGroup3Display);
 
-            $groupifyGroup1Display = True;
-            $groupifyGroup2Display = True;
-            $groupifyGroup3Display = True;
-            $groupifyGroupActiveDisplay = True;
-            $groupifyGroupNeverDisplay = True;
+            // $groupifyGroup1Display = True;
+            // $groupifyGroup2Display = True;
+            // $groupifyGroup3Display = True;
+            // $groupifyGroupActiveDisplay = True;
+            // $groupifyGroupNeverDisplay = True;
 
             $groupArray = array();
             if ($groupifyGroup1Display){
