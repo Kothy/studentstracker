@@ -320,7 +320,6 @@ class block_studentstracker extends block_base {
               array_push($groupArray, -1);
             }
             //$this->debug_to_console($groupArray);
-            //$this->debug_to_console($this->getGroup($groupArray, 2.1). "***getGroup");
 
             foreach ($enrols as $enrol) {
                 if ($enrol->hasrole == true) {
