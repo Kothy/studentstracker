@@ -274,7 +274,9 @@ class block_studentstracker extends block_base {
             $level3_users = 0;
             $level4_users = 0;
             $levelnever_users = 0;
-            $groupify = True;
+
+            $groupify = !empty($this->config->group_grouping) ?
+            $this->config->group_grouping : get_config('studentstracker', 'groupgrouping');
 
             $groupifyGroupNeverDisplay = !empty($this->config->inactive_tracking) ?
             $this->config->inactive_tracking : get_config('studentstracker', 'absentchecked');

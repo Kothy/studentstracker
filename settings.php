@@ -145,4 +145,10 @@ if ($ADMIN->fulltree) {
         get_string('checked', 'block_studentstracker'),
         get_string('checked_desc', 'block_studentstracker'),
         1));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'studentstracker/groupgrouping',
+        get_string('checked', 'block_studentstracker'),
+        get_string('checked_desc', 'block_studentstracker'),
+        1));
 }
