@@ -274,7 +274,7 @@ class block_studentstracker extends block_base {
             $level3_users = 0;
             $level4_users = 0;
             $levelnever_users = 0;
-            $groupify = True;
+            $groupify = False;
 
             $groupifyGroupNeverDisplay = !empty($this->config->inactive_tracking) ?
             $this->config->inactive_tracking : get_config('studentstracker', 'absentchecked');
@@ -323,6 +323,7 @@ class block_studentstracker extends block_base {
 
             foreach ($enrols as $enrol) {
                 if ($enrol->hasrole == true) {
+                  $this->debug_to_console($enrol->id);
                   $accessdays = intval($enrol->lastaccesscourse);
                   $result = $this->count_days_from_access($accessdays);
                   //$this->debug_to_console("Pocet dni: ". $result);
@@ -339,10 +340,10 @@ class block_studentstracker extends block_base {
                   if ($result >= 0 && $result <= 1) {//($result >= $active_days && $result < $level2_days)
                     $usercount++;
                     $active_users++;
-
                   }
                 }
             }
+
             //group1 users
             foreach ($enrols as $enrol) {
                 if ($enrol->hasrole == true && $groupifyGroup1Display == True) {
