@@ -57,13 +57,9 @@ class block_studentstracker_edit_form extends block_edit_form {
             $mform->setDefault('config_truncate', 10);
             $mform->setType('config_truncate', PARAM_INT);
 
-            // $mform->addElement('text', 'config_text_header_fine', get_string('text_header_fine', 'block_studentstracker'));
-            // $mform->setDefault('config_text_header_fine', get_string('text_header_fine', 'block_studentstracker'));
-            // $mform->setType('config_text_header_fine', PARAM_TEXT);
-            //
-            // $mform->addElement('text', 'config_text_footer', get_string('text_footer', 'block_studentstracker'));
-            // $mform->setDefault('config_text_footer', get_string('text_footer_content', 'block_studentstracker'));
-            // $mform->setType('config_text_footer', PARAM_TEXT);
+            $mform->addElement('advcheckbox', 'config_group_grouping', get_string('group_group', 'block_studentstracker'));
+            $mform->setDefault('config_group_grouping', get_config('studentstracker', 'groupgrouping'));
+            $mform->setType('config_group_grouping', PARAM_BOOL);
         }
 
         $mform->addElement('header', 'configheader', get_string('tracking_groups', 'block_studentstracker'));
