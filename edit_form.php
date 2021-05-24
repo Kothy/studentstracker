@@ -69,7 +69,6 @@ class block_studentstracker_edit_form extends block_edit_form {
         // $mform->setType('config_groupify', PARAM_BOOL);
 
         // ACTIVE
-
         $mform->addElement('html', '<p><h3 style="color: orange;">Active users</h3></p>');
 
         $mform->addElement('text', 'config_color_normal', get_string('group_color', 'block_studentstracker'));
@@ -88,7 +87,6 @@ class block_studentstracker_edit_form extends block_edit_form {
         $mform->setType('config_active_tracking', PARAM_BOOL);
 
         // GROUP1
-
         $mform->addElement('html', '<p><h3 style="color: orange;">Group 1</h3></p>');
 
         $mform->addElement('text', 'config_color_days', get_string('group_color', 'block_studentstracker'));
@@ -111,7 +109,6 @@ class block_studentstracker_edit_form extends block_edit_form {
         $mform->setType('config_group1_tracking', PARAM_BOOL);
 
         // GROUP 2
-
         $mform->addElement('html', '<p><h3 style="color: orange;">Group 2</h3></p>');
 
         $mform->addElement('text', 'config_color_days_critical', get_string('group_color', 'block_studentstracker'));
@@ -134,7 +131,6 @@ class block_studentstracker_edit_form extends block_edit_form {
         $mform->setType('config_group2_tracking', PARAM_BOOL);
 
         // GROUP 3
-
         $mform->addElement('html', '<p><h3 style="color: orange;">Group 3</h3></p>');
 
         $mform->addElement('text', 'config_color_days_fatal', get_string('group_color', 'block_studentstracker'));
@@ -157,7 +153,6 @@ class block_studentstracker_edit_form extends block_edit_form {
         $mform->setType('config_group3_tracking', PARAM_BOOL);
 
         // ABSENT
-
         $mform->addElement('html', '<p><h3 style="color: orange;">Enrolled users that never accessed the course</h3></p>');
 
         $mform->addElement('text', 'config_color_days_absent', get_string('group_color', 'block_studentstracker'));
@@ -175,5 +170,4 @@ class block_studentstracker_edit_form extends block_edit_form {
         $mform->setDefault('config_inactive_tracking', get_config('studentstracker', 'absentchecked'));
         $mform->setType('config_inactive_tracking', PARAM_BOOL);
     }
-
   }

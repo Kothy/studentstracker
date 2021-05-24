@@ -31,7 +31,6 @@ if ($ADMIN->fulltree) {
     foreach ($roles as $role) {
         $rolesarray[$role->id] = $role->shortname;
     }
-
     // $settings->add(new admin_setting_configtext(
     //     'studentstracker/trackingdays',
     //     get_string('days', 'block_studentstracker'),
