@@ -31,52 +31,52 @@ if ($ADMIN->fulltree) {
     foreach ($roles as $role) {
         $rolesarray[$role->id] = $role->shortname;
     }
-    // $settings->add(new admin_setting_configtext(
-    //     'studentstracker/trackingdays',
-    //     get_string('days', 'block_studentstracker'),
-    //     get_string('days_desc', 'block_studentstracker'), '1'));
-    //
-    // $settings->add(new admin_setting_configtext(
-    //     'studentstracker/trackingdayscritical',
-    //     get_string('days_critical', 'block_studentstracker'),
-    //     get_string('days_critical_desc', 'block_studentstracker'),
-    //     '7'));
-    //
-    // $settings->add(new admin_setting_configtext(
-    //     'studentstracker/trackingdaysfatal',
-    //     get_string('days_fatal', 'block_studentstracker'),
-    //     get_string('days_fatal_desc', 'block_studentstracker'),
-    //     '28'));
-    //
-    // $settings->add(new admin_setting_configtext(
-    //   'studentstracker/desc_active',
-    //   get_string('days_fatal', 'block_studentstracker'),
-    //   get_string('days_fatal_desc', 'block_studentstracker'),
-    //   'Active'));
-    //
-    // $settings->add(new admin_setting_configtext(
-    //     'studentstracker/desc_never',
-    //     get_string('days_fatal', 'block_studentstracker'),
-    //     get_string('days_fatal_desc', 'block_studentstracker'),
-    //     'Never accessed'));
+
+    $settings->add(new admin_setting_heading(
+      'studentstracker/rolesheading',
+      get_string('roles_header', 'block_studentstracker'),
+      get_string('empty', 'block_studentstracker'),
+    ));
+
+    $settings->add(new admin_setting_configmultiselect(
+        'studentstracker/roletrack',
+        get_string('roletrack', 'block_studentstracker'),
+        get_string('roletrack_desc', 'block_studentstracker'),
+        array('5'),
+        $rolesarray));
+
+
+
+    $settings->add(new admin_setting_heading(
+      'studentstracker/days_heading',
+      get_string('days_header', 'block_studentstracker'),
+      get_string('days_header_info', 'block_studentstracker'),
+    ));
 
     $settings->add(new admin_setting_configtext(
-      'studentstracker/desc_group1',
-      get_string('days_fatal', 'block_studentstracker'),
-      get_string('days_fatal_desc', 'block_studentstracker'),
-      'Group 1'));
+        'studentstracker/trackingdays',
+        get_string('days', 'block_studentstracker'),
+        get_string('empty', 'block_studentstracker'), '1'));
 
     $settings->add(new admin_setting_configtext(
-      'studentstracker/desc_group2',
-      get_string('days_fatal', 'block_studentstracker'),
-      get_string('days_fatal_desc', 'block_studentstracker'),
-      'Group 2'));
+        'studentstracker/trackingdayscritical',
+        get_string('days_critical', 'block_studentstracker'),
+        get_string('empty', 'block_studentstracker'),
+        '7'));
 
     $settings->add(new admin_setting_configtext(
-        'studentstracker/desc_group3',
+        'studentstracker/trackingdaysfatal',
         get_string('days_fatal', 'block_studentstracker'),
-        get_string('days_fatal_desc', 'block_studentstracker'),
-        'Group 3'));
+        get_string('empty', 'block_studentstracker'),
+        '28'));
+
+
+
+    $settings->add(new admin_setting_heading(
+      'studentstracker/colors_heading',
+      get_string('colors_header', 'block_studentstracker'),
+      get_string('colors_header_info', 'block_studentstracker'),
+    ));
 
     $settings->add(new admin_setting_configcolourpicker(
         'studentstracker/colordays',
@@ -97,57 +97,96 @@ if ($ADMIN->fulltree) {
         '#FF0000', null));
 
     $settings->add(new admin_setting_configcolourpicker(
-        'studentstracker/colordaysnever',
-        get_string('color_never', 'block_studentstracker'),
-        get_string('color_never_desc', 'block_studentstracker'),
-        '#e0e0e0', null));
-
-    $settings->add(new admin_setting_configcolourpicker(
         'studentstracker/colordaysnormal',
         get_string('color_normal', 'block_studentstracker'),
         get_string('color_normal_desc', 'block_studentstracker'),
         '#5efa46', null));
 
-    $settings->add(new admin_setting_configmultiselect(
-        'studentstracker/roletrack',
-        get_string('roletrack', 'block_studentstracker'),
-        get_string('roletrack_desc', 'block_studentstracker'),
-        array('5'),
-        $rolesarray));
+    $settings->add(new admin_setting_configcolourpicker(
+        'studentstracker/colordaysnever',
+        get_string('color_never', 'block_studentstracker'),
+        get_string('color_never_desc', 'block_studentstracker'),
+        '#e0e0e0', null));
 
-    $settings->add(new admin_setting_configcheckbox(
-        'studentstracker/activechecked',
-        get_string('checked', 'block_studentstracker'),
-        get_string('checked_desc', 'block_studentstracker'),
-        1));
+
+
+
+    $settings->add(new admin_setting_heading(
+      'studentstracker/desc_heading',
+      get_string('desc_header', 'block_studentstracker'),
+      get_string('desc_header_info', 'block_studentstracker'),
+    ));
+
+    $settings->add(new admin_setting_configtext(
+      'studentstracker/desc_group1',
+      get_string('group1_desc_title', 'block_studentstracker'),
+      get_string('empty', 'block_studentstracker'),
+      'Inactive for 1+ days'));
+
+    $settings->add(new admin_setting_configtext(
+      'studentstracker/desc_group2',
+      get_string('group2_desc_title', 'block_studentstracker'),
+      get_string('empty', 'block_studentstracker'),
+      'Inactive for 7+ days'));
+
+    $settings->add(new admin_setting_configtext(
+        'studentstracker/desc_group3',
+        get_string('group3_desc_title', 'block_studentstracker'),
+        get_string('empty', 'block_studentstracker'),
+        'Inactive for 28+ days'));
+
+    $settings->add(new admin_setting_configtext(
+        'studentstracker/desc_active_group',
+        get_string('active_desc_title', 'block_studentstracker'),
+        get_string('empty', 'block_studentstracker'),
+        'Active users'));
+
+    $settings->add(new admin_setting_configtext(
+        'studentstracker/desc_absent_group',
+        get_string('absent_desc_title', 'block_studentstracker'),
+        get_string('empty', 'block_studentstracker'),
+        'Never active users'));
+
+
+    $settings->add(new admin_setting_heading(
+          'studentstracker/box_heading',
+          get_string('box_header', 'block_studentstracker'),
+          get_string('box_header_info', 'block_studentstracker'),
+        ));
 
     $settings->add(new admin_setting_configcheckbox(
         'studentstracker/group1checked',
-        get_string('checked', 'block_studentstracker'),
-        get_string('checked_desc', 'block_studentstracker'),
+        get_string('g1_checked', 'block_studentstracker'),
+        get_string('empty', 'block_studentstracker'),
         1));
 
     $settings->add(new admin_setting_configcheckbox(
         'studentstracker/group2checked',
-        get_string('checked', 'block_studentstracker'),
-        get_string('checked_desc', 'block_studentstracker'),
+        get_string('g2_checked', 'block_studentstracker'),
+        get_string('empty', 'block_studentstracker'),
         1));
 
     $settings->add(new admin_setting_configcheckbox(
         'studentstracker/group3checked',
-        get_string('checked', 'block_studentstracker'),
-        get_string('checked_desc', 'block_studentstracker'),
+        get_string('g3_checked', 'block_studentstracker'),
+        get_string('empty', 'block_studentstracker'),
+        1));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'studentstracker/activechecked',
+        get_string('active_checked', 'block_studentstracker'),
+        get_string('empty', 'block_studentstracker'),
         1));
 
     $settings->add(new admin_setting_configcheckbox(
         'studentstracker/absentchecked',
-        get_string('checked', 'block_studentstracker'),
-        get_string('checked_desc', 'block_studentstracker'),
+        get_string('absent_checked', 'block_studentstracker'),
+        get_string('empty', 'block_studentstracker'),
         1));
 
     $settings->add(new admin_setting_configcheckbox(
         'studentstracker/groupgrouping',
-        get_string('checked', 'block_studentstracker'),
-        get_string('checked_desc', 'block_studentstracker'),
+        get_string('grouping_checked', 'block_studentstracker'),
+        get_string('empty', 'block_studentstracker'),
         1));
 }
