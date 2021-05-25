@@ -657,6 +657,7 @@ class block_studentstracker extends block_base {
 
 }
 ?>
+
 <script type="text/javascript">
 function openWindow(url) {
   window.open(url, '_blank');
