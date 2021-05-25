@@ -318,13 +318,17 @@ class block_studentstracker extends block_base {
             }
             //$this->debug_to_console($groupArray);
 
+            $inGroup1 = "[";
+            $inGroup2 = "[";
+            $inGroup3 = "[";
+            $inGroupActive = "[";
+            $inGroupNever = "[";
+
             foreach ($enrols as $enrol) {
                 if ($enrol->hasrole == true) {
                   $this->debug_to_console($enrol->id);
                   $accessdays = intval($enrol->lastaccesscourse);
                   $result = $this->count_days_from_access($accessdays);
-                  //$this->debug_to_console("Pocet dni: ". $result);
-                  //$this->debug_to_console("Patri do skupiny: ".$this->getGroup($groupArray, $result));
                 }
             }
 
@@ -338,6 +342,7 @@ class block_studentstracker extends block_base {
                     $usercount++;
                     $active_users++;
                     array_push($notGroupified, $enrol);
+                    $inGroupActive .= $enrol->id. ",";
                   }
                 }
             }
@@ -351,6 +356,7 @@ class block_studentstracker extends block_base {
                     $usercount++;
                     $level2_users++;
                     array_push($notGroupified, $enrol);
+                    $inGroup1 .= $enrol->id. ",";
                   }
                 }
             }
@@ -363,6 +369,7 @@ class block_studentstracker extends block_base {
                     $usercount++;
                     $level3_users++;
                     array_push($notGroupified, $enrol);
+                    $inGroup2 .= $enrol->id. ",";
                   }
                 }
             }
@@ -375,6 +382,7 @@ class block_studentstracker extends block_base {
                     $usercount++;
                     $level4_users++;
                     array_push($notGroupified, $enrol);
+                    $inGroup3 .= $enrol->id. ",";
                   }
                 }
             }
@@ -387,11 +395,24 @@ class block_studentstracker extends block_base {
                     $usercount++;
                     $levelnever_users++;
                     array_push($notGroupified, $enrol);
+                    $inGroupNever .= $enrol->id. ",";
                   }
                 }
             }
+
+            $inGroup1 .= "]";
+            $inGroup2 .= "]";
+            $inGroup3 .= "]";
+            $inGroupActive .= "]";
+            $inGroupNever .= "]";
+            $this->debug_to_console("V active skupine: ". $inGroupActive);
+            $this->debug_to_console("V group1 skupine: ". $inGroup1);
+            $this->debug_to_console("V group2 skupine: ". $inGroup2);
+            $this->debug_to_console("V group3 skupine: ". $inGroup3);
+            $this->debug_to_console("V never skupine: ". $inGroupNever);
+
             if ($groupify == false){
-              $this->debug_to_console("Enrols ". count($notGroupified));
+              //$this->debug_to_console("Enrols ". count($notGroupified));
               usort($notGroupified, function ($a, $b) use ($order) { return strcmp($a->lastname, $b->lastname);});
               foreach ($notGroupified as $u) {
                    if ($u->hasrole == true) {
@@ -458,12 +479,14 @@ class block_studentstracker extends block_base {
               if ($level2_users > 0 && $groupify){
                 $headertext2 = '<br><div class="studentstracker_group">
                 <span class="badge badge-warning">'.$level2_users.'</span>';
-                $headertext2 .= $group1Desc.'</div><br>';
+                $headertext2 .= $group1Desc.
+                '   <button type="button" class="badge badge-warning" onclick="openWindowArray('
+                .$inGroup1.')">'.$this->text_footer.'</button>'.'</div><br>';
                 array_push($this->content->items, $headertext2);
               }
               // group1 items
               foreach ($enrols as $enrol) {
-                  if ($enrol->hasrole == true && $groupifyGroup1Display == True) {
+                  if ($enrol->hasrole == true && $groupifyGroup1Display == true) {
                     $accessdays = intval($enrol->lastaccesscourse);
                     $result = $this->count_days_from_access($accessdays);
                     if  ($this->getGroup($groupArray, $result) == 1) {//($result >= $level2_days && $result < $level3_days)
@@ -480,7 +503,10 @@ class block_studentstracker extends block_base {
               if ($level3_users > 0 && $groupify){
                 $headertext2 = '<br><div class="studentstracker_group">
                 <span class="badge badge-warning">'.$level3_users.'</span>';
-                $headertext2 .= $group2Desc.'</div><br>';
+                $headertext2 .= $group2Desc.
+                '   <button type="button" class="badge badge-warning" onclick="openWindowArray('
+                .$inGroup2.')">'.$this->text_footer.'</button>'
+                .'</div><br>';
                 array_push($this->content->items, $headertext2);
               }
               // group2 items
@@ -502,7 +528,10 @@ class block_studentstracker extends block_base {
               if ($level4_users > 0 && $groupify){
                 $headertext2 = '<br><div class="studentstracker_group">
                 <span class="badge badge-warning">'.$level4_users.'</span>';
-                $headertext2 .= $group3Desc.'</div><br>';
+                $headertext2 .= $group3Desc.
+                '   <button type="button" class="badge badge-warning" onclick="openWindowArray('
+                .$inGroup3.')">'.$this->text_footer.'</button>'
+                .'</div><br>';
                 array_push($this->content->items, $headertext2);
               }
               // group3 items
@@ -526,7 +555,10 @@ class block_studentstracker extends block_base {
                 $headertext2 = '<br><div class="studentstracker_group">
                 <span class="badge badge-warning">'
                 .$levelnever_users.'</span>';
-                $headertext2 .= $descNever.'</div><br>';
+                $headertext2 .= $descNever.
+                '   <button type="button" class="badge badge-warning" onclick="openWindowArray('
+                .$inGroupNever.')">'.$this->text_footer.'</button>'
+                .'</div><br>';
                 array_push($this->content->items, $headertext2);
                 unset($headertext2);
               }
@@ -547,16 +579,30 @@ class block_studentstracker extends block_base {
                   }
               }
             }
-
-
-
+            echo '<script type="text/javascript"> var messageUrl = "'.
+            new moodle_url('/message/index.php')."?id="
+            .'";</script>';
+            $contactIds = "[";
+            foreach ($notGroupified as $u) {
+                  $contactIds .= $u->id.",";
+            }
+            $contactIds .= "]";
+            $this->debug_to_console("Contacs ids: ". $contactIds);
             if ($usercount > 0) {
+                $button = "";
+                if ($groupify == false){
+                  $button = '<button type="button" class="badge badge-warning" onclick="openWindowArray('.$contactIds.')">'.$this->text_footer.'</button>'.
+                  '</div>';
+                }
+                $url = new moodle_url('/course/view.php?id='.$COURSE->id);
                 $headertext = '<div class="studentstracker_header">
                 <span class="badge badge-warning">'.$usercount.'</span>';
                 $headertext .= "All users".'</div>';
-                $footertext = '<div class="studentstracker_footer">'
-                .'<button type="button" class="badge badge-warning">'
-                .$this->text_footer.'</button>'.'</div>';
+                $footertext = '<div class="studentstracker_footer">'.$button;
+                // '<form action="'.$url.'" method="post">'.
+                // '<input type="submit" name="contactThem" value="'.$this->text_footer.'">'./*class="badge badge-warning"*/
+                // '</input>'.'</form>'.
+
             } else {
                 $headertext = '<div class="studentstracker_header">'.
                 $this->text_header_fine.'</div>';
@@ -610,3 +656,15 @@ class block_studentstracker extends block_base {
 
 
 }
+?>
+<script type="text/javascript">
+function openWindow(url) {
+  window.open(url, '_blank');
+}
+
+function openWindowArray(arr){
+  for (var i = 0; i < arr.length; i++) {
+      openWindow(messageUrl + arr[i]);
+  }
+}
+</script>
