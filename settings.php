@@ -158,35 +158,35 @@ if ($ADMIN->fulltree) {
         'studentstracker/group1checked',
         get_string('g1_checked', 'block_studentstracker'),
         get_string('empty', 'block_studentstracker'),
-        1));
+        '0', '0', '1'));
 
     $settings->add(new admin_setting_configcheckbox(
         'studentstracker/group2checked',
         get_string('g2_checked', 'block_studentstracker'),
         get_string('empty', 'block_studentstracker'),
-        1));
+        '0', '0', '1'));
 
     $settings->add(new admin_setting_configcheckbox(
         'studentstracker/group3checked',
         get_string('g3_checked', 'block_studentstracker'),
         get_string('empty', 'block_studentstracker'),
-        1));
+        '0', '0', '1'));
 
     $settings->add(new admin_setting_configcheckbox(
         'studentstracker/activechecked',
         get_string('active_checked', 'block_studentstracker'),
         get_string('empty', 'block_studentstracker'),
-        1));
+        '0', '0', '1'));
 
     $settings->add(new admin_setting_configcheckbox(
         'studentstracker/absentchecked',
         get_string('absent_checked', 'block_studentstracker'),
         get_string('empty', 'block_studentstracker'),
-        1));
+        '0', '0', '1'));
 
     $settings->add(new admin_setting_configcheckbox(
         'studentstracker/groupgrouping',
         get_string('grouping_checked', 'block_studentstracker'),
         get_string('empty', 'block_studentstracker'),
-        1));
+        '0', '0', '1'));
 }
